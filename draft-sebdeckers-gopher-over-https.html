@@ -1,0 +1,553 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head profile="http://www.w3.org/2006/03/hcard http://dublincore.org/documents/2008/08/04/dc-html/">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+
+  <title>Gopher over HTTPS (GoH)</title>
+
+  
+<style type="text/css">/*<![CDATA[*/
+
+body {
+  font: 16px "Helvetica Neue","Open Sans",Helvetica,Calibri,sans-serif;
+  color: #333;
+  font-size-adjust: 0.5;
+  line-height: 24px;
+  margin: 75px auto;
+  max-width: 624px;
+  padding: 0 5px;
+}
+
+.title, .filename, h1, h2, h3, h4, h5 {
+  font: 16px "Roboto Condensed","Helvetica Neue","Open Sans",Helvetica,Calibri,sans-serif;
+  font-size-adjust: 0.5;
+  font-weight: bold;
+  color: #333;
+  line-height: 100%;
+  margin: 1.2em 0 0.3em;
+}
+.title, #rfc\.title h1 { font-size: 32px; }
+h1, section h1, h2, section h2, section h3, nav h2 { font-size: 20px; }
+h3, section h4, h4, section h5 { font-size: 16px; }
+h1 a[href], h2 a[href], h3 a[href], h4 a[href] {
+  color: #333;
+}
+
+table {
+  margin-left: 0em;
+  border-collapse: collapse;
+}
+th {
+  text-align: left;
+  border-bottom: 2px solid #ddd;
+}
+td {
+  border-top: 1px solid #ddd;
+  vertical-align: top;
+}
+tr:nth-child(2n+1) > td,
+tr:nth-child(2n+1) > th {
+  background-color: #f9f9f9;
+}
+td.reference {
+  max-width: 200px;
+  border-top: none;
+  padding-right: 1em;
+}
+.right {
+  text-align: right;
+}
+
+
+table.header, table#rfc\.headerblock {
+  width: 100%;
+}
+table.header td, table#rfc\.headerblock td {
+  border: none;
+  background-color: transparent;
+  color: black;
+  padding: 0;
+}
+.filename {
+  display: block;
+  color: rgb(119, 119, 119);
+  font-size: 20px;
+  font-weight: normal;
+  line-height: 100%;
+  margin: 10px 0 32px;
+}
+#rfc\.abstract+p, #rfc\.abstract p {
+  font-size: 20px;
+  line-height: 28px;
+}
+
+samp, tt, code, pre, span.tt {
+  font: 13.5px Consolas, monospace;
+  font-size-adjust: none;
+}
+pre {
+  background-color: #eee;
+  border: 1px solid #ddd;
+  overflow-x: auto;
+  padding: 5px;
+  margin: 5px;
+}
+.figure, caption {
+  font-style: italic;
+  margin: 0 1.5em;
+  text-align: left;
+}
+
+address {
+  margin: 16px 2px;
+  line-height: 20px;
+}
+.vcard {
+  font-style: normal;
+}
+.vcardline {
+  display: block;
+}
+.vcardline .fn, address b {
+  font-weight: normal;
+}
+.vcardline .hidden {
+  display: none;
+}
+
+dl {
+  margin-left: 1em;
+}
+dl.dl-horizontal: {
+  margin-left: 0;
+}
+dl > dt {
+  float: left;
+  margin-right: 1em;
+}
+dl.nohang > dt {
+  float: none;
+}
+dl > dd {
+  margin-bottom: .5em;
+}
+dl.compact > dd {
+  margin-bottom: 0em;
+}
+dl > dd > dl {
+  margin-top: 0.5em;
+  margin-bottom: 0em;
+}
+ul.empty {
+  list-style-type: none;
+}
+ul.empty li {
+  margin-top: .5em;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #eee;
+}
+hr.noprint {
+  display: none;
+}
+
+a {
+  text-decoration: none;
+}
+a[href] {
+  color: #2a6496;
+}
+a[href]:hover {
+  background-color: #eee;
+}
+
+p, ol, ul, li {
+  padding: 0;
+}
+p {
+  margin: 0.5em 0;
+}
+ol, ul {
+  margin: 0.2em 0 0.2em 2em;
+}
+li {
+  margin: 0.2em 0;
+}
+address {
+  font-style: normal;
+}
+
+ul.toc ul {
+  margin: 0 0 0 2em;
+}
+ul.toc li {
+  list-style: none;
+  margin: 0;
+}
+
+@media screen and (min-width: 924px) {
+  body {
+    padding-right: 350px;
+  }
+  body>ul.toc, body>#rfc\.toc {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    right: calc(50vw - 500px);
+    width: 300px;
+    z-index: 1;
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+  body>#rfc\.toc {
+    top: 55px;
+  }
+  body>ul.toc {
+    top: 100px;
+  }
+
+  ul.toc {
+    margin: 0 0 0 4px;
+    font-size: 12px;
+    line-height: 20px;
+  }
+  ul.toc ul {
+    margin-left: 1.2em;
+  }
+}
+
+.github-fork-ribbon-wrapper {
+  display: none;
+}
+@media screen and (min-width: 800px) {
+  /* "Fork me on GitHub" CSS ribbon based on
+   * https://github.com/simonwhitaker/github-fork-ribbon-css
+   */
+  .github-fork-ribbon {
+    position: absolute;
+    padding: 2px 0;
+    background-color: #a00;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15));
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.5);
+    font: 700 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+    pointer-events: auto;
+
+    top: 38px;
+    right: -45px;
+
+    transform: rotate(45deg);
+  }
+
+  .github-fork-ribbon a[href],
+  .github-fork-ribbon a[href]:hover {
+    color: #fff;
+    background-color: transparent;
+    text-decoration: none;
+    text-shadow: 0 -1px rgba(0, 0, 0, 0.5);
+    text-align: center;
+
+    width: 190px;
+    line-height: 18px;
+
+    display: inline-block;
+    padding: 2px 0;
+
+    border: 1.5px dotted #fff;
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+
+  .github-fork-ribbon-wrapper {
+    display: block;
+    width: 130px;
+    height: 130px;
+    position: absolute;
+    overflow: hidden;
+    top: 0; right: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+}
+@media screen and (min-width: 1000px) {
+  .github-fork-ribbon-wrapper {
+    position: fixed;
+  }
+/*]]>*/</style>
+<meta name="viewport" content="initial-scale=1.0">
+
+
+  <link href="#rfc.toc" rel="Contents">
+<link href="#rfc.section.1" rel="Chapter" title="1 Introduction">
+<link href="#rfc.section.2" rel="Chapter" title="2 Terminology">
+<link href="#rfc.section.3" rel="Chapter" title="3 HTTP and Gopher URL">
+<link href="#rfc.section.4" rel="Chapter" title="4 The HTTP Exchange">
+<link href="#rfc.section.4.1" rel="Chapter" title="4.1 The HTTP Request">
+<link href="#rfc.section.4.2" rel="Chapter" title="4.2 The HTTP Response">
+<link href="#rfc.section.5" rel="Chapter" title="5 IANA Considerations">
+<link href="#rfc.section.5.1" rel="Chapter" title="5.1 Registration of the &#8220;application/gopher&#8221; Media Type">
+<link href="#rfc.section.6" rel="Chapter" title="6 Privacy Considerations">
+<link href="#rfc.section.7" rel="Chapter" title="7 Security Considerations">
+<link href="#rfc.section.8" rel="Chapter" title="8 Operational Considerations">
+<link href="#rfc.references" rel="Chapter" title="9 Normative References">
+<link href="#rfc.authors" rel="Chapter">
+
+
+  <meta name="generator" content="xml2rfc version 2.22.0 - https://tools.ietf.org/tools/xml2rfc" />
+  <link rel="schema.dct" href="http://purl.org/dc/terms/" />
+
+  <meta name="dct.creator" content="Deckers, S. and B. English" />
+  <meta name="dct.identifier" content="urn:ietf:id:draft-sebdeckers-gopher-over-https-latest" />
+  <meta name="dct.issued" scheme="ISO8601" content="2019-03-25" />
+  <meta name="dct.abstract" content="This document describes a protocol for sending Gopher requests and receiving Gopher responses over HTTPS. Each Gopher request-response pair is mapped to an HTTPS exchange." />
+  <meta name="description" content="This document describes a protocol for sending Gopher requests and receiving Gopher responses over HTTPS. Each Gopher request-response pair is mapped to an HTTPS exchange." />
+
+</head>
+
+<body>
+
+  <table class="header">
+    <tbody>
+    
+    	<tr>
+<td class="left">Network Working Group</td>
+<td class="right">S. Deckers</td>
+</tr>
+<tr>
+<td class="left">Internet-Draft</td>
+<td class="right">Commons Host</td>
+</tr>
+<tr>
+<td class="left">Intended status: Experimental</td>
+<td class="right">B. English</td>
+</tr>
+<tr>
+<td class="left">Expires: September 26, 2019</td>
+<td class="right">Independent</td>
+</tr>
+<tr>
+<td class="left"></td>
+<td class="right">March 25, 2019</td>
+</tr>
+
+    	
+    </tbody>
+  </table>
+
+  <p class="title">Gopher over HTTPS (GoH)<br />
+  <span class="filename">draft-sebdeckers-gopher-over-https-latest</span></p>
+  
+  <h1 id="rfc.abstract"><a href="#rfc.abstract">Abstract</a></h1>
+<p>This document describes a protocol for sending Gopher requests and receiving Gopher responses over HTTPS. Each Gopher request-response pair is mapped to an HTTPS exchange.</p>
+<h1 id="rfc.status"><a href="#rfc.status">Status of This Memo</a></h1>
+<p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
+<p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at https://datatracker.ietf.org/drafts/current/.</p>
+<p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
+<p>This Internet-Draft will expire on September 26, 2019.</p>
+<h1 id="rfc.copyrightnotice"><a href="#rfc.copyrightnotice">Copyright Notice</a></h1>
+<p>Copyright (c) 2019 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
+<p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (https://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
+
+  
+  <hr class="noprint" />
+  <h1 class="np" id="rfc.toc"><a href="#rfc.toc">Table of Contents</a></h1>
+  <ul class="toc">
+
+  	<li>1.   <a href="#rfc.section.1">Introduction</a>
+</li>
+<li>2.   <a href="#rfc.section.2">Terminology</a>
+</li>
+<li>3.   <a href="#rfc.section.3">HTTP and Gopher URL</a>
+</li>
+<li>4.   <a href="#rfc.section.4">The HTTP Exchange</a>
+</li>
+<ul><li>4.1.   <a href="#rfc.section.4.1">The HTTP Request</a>
+</li>
+<li>4.2.   <a href="#rfc.section.4.2">The HTTP Response</a>
+</li>
+</ul><li>5.   <a href="#rfc.section.5">IANA Considerations</a>
+</li>
+<ul><li>5.1.   <a href="#rfc.section.5.1">Registration of the &#8220;application/gopher&#8221; Media Type</a>
+</li>
+</ul><li>6.   <a href="#rfc.section.6">Privacy Considerations</a>
+</li>
+<li>7.   <a href="#rfc.section.7">Security Considerations</a>
+</li>
+<li>8.   <a href="#rfc.section.8">Operational Considerations</a>
+</li>
+<li>9.   <a href="#rfc.references">Normative References</a>
+</li>
+<li><a href="#rfc.authors">Authors' Addresses</a>
+</li>
+
+
+  </ul>
+
+  <h1 id="rfc.section.1">
+<a href="#rfc.section.1">1.</a> <a href="#introduction" id="introduction">Introduction</a>
+</h1>
+<p id="rfc.section.1.p.1">This document defines a specific protocol, Gopher over HTTPS (GoH), for sending Gopher <a href="#RFC1436" class="xref">[RFC1436]</a> requests, as Gopher <a href="#RFC4266" class="xref">[RFC4266]</a> URIs, and receiving Gopher responses over HTTPS <a href="#RFC7540" class="xref">[RFC7540]</a>, using https <a href="#RFC2818" class="xref">[RFC2818]</a> URIs (and therefore TLS <a href="#RFC8446" class="xref">[RFC8446]</a> security for integrity and confidentiality). Each Gopher request-response pair is mapped into an HTTPS exchange.</p>
+<h1 id="rfc.section.2">
+<a href="#rfc.section.2">2.</a> <a href="#terminology" id="terminology">Terminology</a>
+</h1>
+<p id="rfc.section.2.p.1">The key words &#8220;MUST&#8221;, &#8220;MUST NOT&#8221;, &#8220;REQUIRED&#8221;, &#8220;SHALL&#8221;, &#8220;SHALL NOT&#8221;, &#8220;SHOULD&#8221;, &#8220;SHOULD NOT&#8221;, &#8220;RECOMMENDED&#8221;, &#8220;NOT RECOMMENDED&#8221;, &#8220;MAY&#8221;, and &#8220;OPTIONAL&#8221; in this document are to be interpreted as described in BCP&#160;14 <a href="#RFC2119" class="xref">[RFC2119]</a> <a href="#RFC8174" class="xref">[RFC8174]</a> when, and only when, they appear in all capitals, as shown here.</p>
+<p id="rfc.section.2.p.2">A server that supports this protocol is called a &#8220;GoH server&#8221; to differentiate it from a &#8220;Gopher server&#8221;. Similarly, a client that supports this protocol is called a &#8220;GoH client&#8221;.</p>
+<h1 id="rfc.section.3">
+<a href="#rfc.section.3">3.</a> <a href="#http-and-gopher-url" id="http-and-gopher-url">HTTP and Gopher URL</a>
+</h1>
+<p id="rfc.section.3.p.1">A GoH client is configured with a URI Template <a href="#RFC6570" class="xref">[RFC6570]</a> which describes how to construct the URL to use for the HTTP request. Discovery of the URI Template is beyond the scope of this protocol. The single variable &#8220;url&#8221; is defined as the Gopher URI of the request.</p>
+<p id="rfc.section.3.p.2">Example URI Template:</p>
+<pre>
+https://goh.example.com/gopher-proxy{?url}
+</pre>
+<p id="rfc.section.3.p.3">Given the Gopher URI of the Gopher request:</p>
+<pre>
+gopher://gopher.example.com
+</pre>
+<p id="rfc.section.3.p.4">Results in the HTTPS request URI:</p>
+<pre>
+https://goh.example.com/gopher-proxy?url=gopher%3A%2F%2Fgopher.example.com
+</pre>
+<h1 id="rfc.section.4">
+<a href="#rfc.section.4">4.</a> <a href="#the-http-exchange" id="the-http-exchange">The HTTP Exchange</a>
+</h1>
+<h1 id="rfc.section.4.1">
+<a href="#rfc.section.4.1">4.1.</a> <a href="#the-http-request" id="the-http-request">The HTTP Request</a>
+</h1>
+<p id="rfc.section.4.1.p.1">A GoH client encodes a single Gopher request into an HTTP request. The HTTP request MUST use the GET method. A GoH client SHOULD include an HTTP Accept request header field with the media type &#8220;application/gopher&#8221;.</p>
+<pre>
+Accept: application/gopher
+</pre>
+<h1 id="rfc.section.4.2">
+<a href="#rfc.section.4.2">4.2.</a> <a href="#the-http-response" id="the-http-response">The HTTP Response</a>
+</h1>
+<p id="rfc.section.4.2.p.1">A GoH server must include an HTTP Content-Type response header field with the media type &#8220;application/gopher&#8221; to indicate the body contains a Gopher response.</p>
+<pre>
+Content-Type: application/gopher
+</pre>
+<p id="rfc.section.4.2.p.2">A GoH server response has the Gopher response as its body.</p>
+<h1 id="rfc.section.5">
+<a href="#rfc.section.5">5.</a> <a href="#iana-considerations" id="iana-considerations">IANA Considerations</a>
+</h1>
+<h1 id="rfc.section.5.1">
+<a href="#rfc.section.5.1">5.1.</a> <a href="#registration-of-the-applicationgopher-media-type" id="registration-of-the-applicationgopher-media-type">Registration of the &#8220;application/gopher&#8221; Media Type</a>
+</h1>
+<p id="rfc.section.5.1.p.1">Type name: application</p>
+<p id="rfc.section.5.1.p.2">Subtype name: gopher</p>
+<p id="rfc.section.5.1.p.3">Required parameters: N/A</p>
+<p id="rfc.section.5.1.p.4">Optional parameters: N/A</p>
+<p id="rfc.section.5.1.p.5">Encoding considerations: This is either in text or binary format. The contents are a Gopher response as defined in RFC1436.</p>
+<p id="rfc.section.5.1.p.6">Security considerations: The content is a Gopher response. Security issues are not discussed in RFC1436.</p>
+<p id="rfc.section.5.1.p.7">Interoperability considerations: None.</p>
+<p id="rfc.section.5.1.p.8">Published specification: RFC XXXX.</p>
+<p id="rfc.section.5.1.p.9">Applications that use this media type: Gopher over HTTPS clients and servers, or other systems using Gopher responses.</p>
+<p id="rfc.section.5.1.p.10">Additional information:</p>
+<p id="rfc.section.5.1.p.11">Deprecated alias names for this type: N/A Magic number(s): N/A File extension(s): N/A Macintosh file type code(s): N/A</p>
+<p id="rfc.section.5.1.p.12">Person &amp; email address to contact for further information: Sebastiaan Deckers <a href="mailto:sebdeckers83@gmail.com">sebdeckers83@gmail.com</a></p>
+<p id="rfc.section.5.1.p.13">Intended usage: COMMON</p>
+<p id="rfc.section.5.1.p.14">Restrictions on usage: N/A</p>
+<p id="rfc.section.5.1.p.15">Author: Sebastiaan Deckers <a href="mailto:sebdeckers83@gmail.com">sebdeckers83@gmail.com</a></p>
+<p id="rfc.section.5.1.p.16">Change controller: IESG</p>
+<h1 id="rfc.section.6">
+<a href="#rfc.section.6">6.</a> <a href="#privacy-considerations" id="privacy-considerations">Privacy Considerations</a>
+</h1>
+<h1 id="rfc.section.7">
+<a href="#rfc.section.7">7.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a>
+</h1>
+<h1 id="rfc.section.8">
+<a href="#rfc.section.8">8.</a> <a href="#operational-considerations" id="operational-considerations">Operational Considerations</a>
+</h1>
+<h1 id="rfc.references">
+<a href="#rfc.references">9.</a> Normative References</h1>
+<table><tbody>
+<tr>
+<td class="reference"><b id="RFC1436">[RFC1436]</b></td>
+<td class="top">
+<a>Anklesaria, F.</a>, <a>McCahill, M.</a>, <a>Lindner, P.</a>, <a>Johnson, D.</a>, <a>Torrey, D.</a> and <a>B. Albert</a>, "<a href="https://tools.ietf.org/html/rfc1436">The Internet Gopher Protocol (a distributed document search and retrieval protocol)</a>", RFC 1436, DOI 10.17487/RFC1436, March 1993.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC2119">[RFC2119]</b></td>
+<td class="top">
+<a>Bradner, S.</a>, "<a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC2818">[RFC2818]</b></td>
+<td class="top">
+<a>Rescorla, E.</a>, "<a href="https://tools.ietf.org/html/rfc2818">HTTP Over TLS</a>", RFC 2818, DOI 10.17487/RFC2818, May 2000.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC4266">[RFC4266]</b></td>
+<td class="top">
+<a>Hoffman, P.</a>, "<a href="https://tools.ietf.org/html/rfc4266">The gopher URI Scheme</a>", RFC 4266, DOI 10.17487/RFC4266, November 2005.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC6570">[RFC6570]</b></td>
+<td class="top">
+<a>Gregorio, J.</a>, <a>Fielding, R.</a>, <a>Hadley, M.</a>, <a>Nottingham, M.</a> and <a>D. Orchard</a>, "<a href="https://tools.ietf.org/html/rfc6570">URI Template</a>", RFC 6570, DOI 10.17487/RFC6570, March 2012.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC7540">[RFC7540]</b></td>
+<td class="top">
+<a>Belshe, M.</a>, <a>Peon, R.</a> and <a>M. Thomson</a>, "<a href="https://tools.ietf.org/html/rfc7540">Hypertext Transfer Protocol Version 2 (HTTP/2)</a>", RFC 7540, DOI 10.17487/RFC7540, May 2015.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC8174">[RFC8174]</b></td>
+<td class="top">
+<a>Leiba, B.</a>, "<a href="https://tools.ietf.org/html/rfc8174">Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words</a>", BCP 14, RFC 8174, DOI 10.17487/RFC8174, May 2017.</td>
+</tr>
+<tr>
+<td class="reference"><b id="RFC8446">[RFC8446]</b></td>
+<td class="top">
+<a>Rescorla, E.</a>, "<a href="https://tools.ietf.org/html/rfc8446">The Transport Layer Security (TLS) Protocol Version 1.3</a>", RFC 8446, DOI 10.17487/RFC8446, August 2018.</td>
+</tr>
+</tbody></table>
+<h1 id="rfc.authors"><a href="#rfc.authors">Authors' Addresses</a></h1>
+<div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Sebastiaan Deckers</span> 
+	  <span class="n hidden">
+		<span class="family-name">Deckers</span>
+	  </span>
+	</span>
+	<span class="org vcardline">Commons Host</span>
+	<span class="adr">
+	  
+	  <span class="vcardline">
+		<span class="locality"></span> 
+		<span class="region"></span>
+		<span class="code"></span>
+	  </span>
+	  <span class="country-name vcardline"></span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:sebdeckers83@gmail.com">sebdeckers83@gmail.com</a></span>
+
+  </address>
+</div><div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Bryan English</span> 
+	  <span class="n hidden">
+		<span class="family-name">English</span>
+	  </span>
+	</span>
+	<span class="org vcardline">Independent</span>
+	<span class="adr">
+	  
+	  <span class="vcardline">
+		<span class="locality"></span> 
+		<span class="region"></span>
+		<span class="code"></span>
+	  </span>
+	  <span class="country-name vcardline"></span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:bryan@bryanenglish.com">bryan@bryanenglish.com</a></span>
+
+  </address>
+</div>
+
+</body>
+</html>
