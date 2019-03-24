@@ -43,7 +43,9 @@ A server that supports this protocol is called a "GoH server" to differentiate i
 
 # HTTP and Gopher URL
 
-A GoH client is configured with a URI Template {{!RFC6570}} which describes how to construct the URL to use for the HTTP request. Discovery of the URI Template is beyond the scope of this protocol. The single variable "url" is defined as the Gopher URI of the request.
+A GoH client is configured with a URI Template {{!RFC6570}} which describes how to construct the URL to use for the HTTP request. Discovery of the URI Template is beyond the scope of this protocol. The single variable "url" refers to the Gopher URI of the request.
+
+When an HTTPS request is constructed using the URI template, the Gopher URI MUST be percent-encoded.
 
 Example URI Template:
 
@@ -53,7 +55,7 @@ Given the Gopher URI of the Gopher request:
 
     gopher://gopher.example.com
 
-Results in the HTTPS request URI:
+The resulting HTTPS request URI is:
 
     https://goh.example.com/gopher-proxy?url=gopher%3A%2F%2Fgopher.example.com
 
@@ -71,7 +73,7 @@ A GoH server must include an HTTP Content-Type response header field with the me
 
     Content-Type: application/gopher
 
-A GoH server response has the Gopher response as its body.
+A GoH server's HTTP response message has the Gopher response as its message body.
 
 # IANA Considerations
 
