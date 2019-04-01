@@ -2,11 +2,15 @@
 title: Gopher over HTTPS (GoH)
 abbrev: GoH
 docname: draft-sebdeckers-gopher-over-https-latest
-area: art
-category: exp
+
 ipr: trust200902
+area: Applications
+# wg: Gopher
+kw: Internet-Draft
+cat: exp
 
 stand_alone: yes
+coding: UTF-8
 pi:
   toc: yes
   tocdepth: 2
@@ -25,15 +29,29 @@ author:
   org: Independent
   email: bryan@bryanenglish.com
 
+informative:
+  CORS:
+    title: "Cross-Origin Resource Sharing"
+    target: "https://fetch.spec.whatwg.org/#http-cors-protocol"
+  TCP:
+    title: "Transmission Control Protocol"
+    target: "https://rfc-editor.org/rfc/rfc793.txt"
+
 --- abstract
 
-This document describes a protocol for sending Gopher requests and receiving Gopher responses over HTTPS. Each Gopher request-response pair is mapped to an HTTPS exchange.
+This document describes a protocol for sending Gopher requests and receiving Gopher responses over HTTPS. Each Gopher request-response pair is mapped to an HTTPS exchange. This provides Gopher with an encrypted transport, interleaved requests and responses over long-lived connections, and hosting of multiple domains on a single IP address.
 
 --- middle
 
 # Introduction
 
-This document defines a specific protocol, Gopher over HTTPS (GoH), for sending Gopher {{!RFC1436}} requests, as Gopher {{!RFC4266}} URIs, and receiving Gopher responses over HTTPS {{!RFC7540}}, using https {{!RFC2818}} URIs (and therefore TLS {{!RFC8446}} security for integrity and confidentiality). Each Gopher request-response pair is mapped into an HTTPS exchange.
+This document defines a specific protocol, Gopher over HTTPS (GoH), for sending Gopher {{!RFC1436}} requests, as Gopher URIs {{!RFC4266}}, and receiving Gopher responses over HTTPS {{!RFC7540}}, using https {{!RFC2818}} URIs (and therefore TLS {{!RFC8446}} security for integrity and confidentiality). Each Gopher request-response pair is mapped into an HTTPS exchange.
+
+Aligning Gopher with HTTP makes Gopher available to web applications and web servers.
+
+Gopher assumes TCP as a transport. This presents a challenge to web applications running in a web browser, since direct access to TCP is not available. GoH clients can run within the constraints of existing browser APIs and the Cross Origin Resource Sharing (CORS) {{CORS}} restriction.
+
+Gopher does not include the domain and port in its request path. GoH servers receive the entire Gopher URI {{!RFC4266}} which includes the Gopher domain and port. This creates a way to implement multi-tenant servers, also known as virtual hosting, with multiple Gopher domains on a shared IP address.
 
 # Terminology
 
@@ -41,7 +59,7 @@ This document defines a specific protocol, Gopher over HTTPS (GoH), for sending 
 
 A server that supports this protocol is called a "GoH server" to differentiate it from a "Gopher server". Similarly, a client that supports this protocol is called a "GoH client".
 
-# HTTP and Gopher URL
+# HTTP and Gopher URL {#URL}
 
 A GoH client is configured with a URI Template {{!RFC6570}} which describes how to construct the URL to use for the HTTP request. Discovery of the URI Template is beyond the scope of this protocol. The single variable "url" is defined as the Gopher URI of the request.
 
@@ -116,6 +134,12 @@ Change controller: IESG
 
 # Privacy Considerations
 
+The Gopher protocol assumes TCP {{TCP}} as its transport. This leaves Gopher traffic unencrypted on the wire. In contrast, GoH relies on the security mechanisms in HTTPS and TLS. By using an encrypted transport, GoH prevents passive monitoring and active tampering of Gopher requests and responses by intermediaries.
+
 # Security Considerations
 
-# Operational Considerations
+Note that security issues are not discussed in {{!RFC1436}}.
+
+Sending Gopher over HTTPS provides authentication of the server by its domain name. However a GoH client can only authenticate the connection as far as the GoH server. If the GoH server is merely a proxy or gateway to a Gopher server, the connection may not be end-to-end secure.
+
+A GoH server operating as a proxy or gateway SHOULD restrict itself to relay only Gopher requests to the reserved port 70. The one-shot nature of Gopher requests poses a risk that such GoH servers could be used as hops by attackers to hide their source address from other TCP-based application destinations.
